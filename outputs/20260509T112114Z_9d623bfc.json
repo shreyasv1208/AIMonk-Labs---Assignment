@@ -1,0 +1,79 @@
+{
+  "model": "yolov3u.pt",
+  "device": "cpu",
+  "image": {
+    "width": 300,
+    "height": 229
+  },
+  "detections_count": 6,
+  "detections": [
+    {
+      "label": "apple",
+      "class_id": 47,
+      "confidence": 0.889,
+      "bbox": {
+        "x1": 71.5,
+        "y1": 60.58,
+        "x2": 174.61,
+        "y2": 163.99
+      }
+    },
+    {
+      "label": "apple",
+      "class_id": 47,
+      "confidence": 0.8324,
+      "bbox": {
+        "x1": 11.13,
+        "y1": 20.31,
+        "x2": 93.54,
+        "y2": 106.85
+      }
+    },
+    {
+      "label": "apple",
+      "class_id": 47,
+      "confidence": 0.8168,
+      "bbox": {
+        "x1": 110.64,
+        "y1": 130.57,
+        "x2": 215.66,
+        "y2": 226.08
+      }
+    },
+    {
+      "label": "apple",
+      "class_id": 47,
+      "confidence": 0.7056,
+      "bbox": {
+        "x1": 211.75,
+        "y1": 142.41,
+        "x2": 299.92,
+        "y2": 227.02
+      }
+    },
+    {
+      "label": "apple",
+      "class_id": 47,
+      "confidence": 0.5383,
+      "bbox": {
+        "x1": 83.95,
+        "y1": 0.0,
+        "x2": 131.54,
+        "y2": 41.71
+      }
+    },
+    {
+      "label": "apple",
+      "class_id": 47,
+      "confidence": 0.3098,
+      "bbox": {
+        "x1": 165.34,
+        "y1": 69.32,
+        "x2": 234.67,
+        "y2": 120.55
+      }
+    }
+  ],
+  "input_filename": "apple_77.jpg",
+  "annotated_image_file": "20260509T112114Z_9d623bfc_boxed.jpg"
+}

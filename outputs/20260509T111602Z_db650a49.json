@@ -1,0 +1,46 @@
+{
+  "model": "yolov3u.pt",
+  "device": "cpu",
+  "image": {
+    "width": 891,
+    "height": 382
+  },
+  "detections_count": 3,
+  "detections": [
+    {
+      "label": "car",
+      "class_id": 2,
+      "confidence": 0.9063,
+      "bbox": {
+        "x1": 287.04,
+        "y1": 119.44,
+        "x2": 623.38,
+        "y2": 325.77
+      }
+    },
+    {
+      "label": "car",
+      "class_id": 2,
+      "confidence": 0.9061,
+      "bbox": {
+        "x1": 519.58,
+        "y1": 114.54,
+        "x2": 887.6,
+        "y2": 345.57
+      }
+    },
+    {
+      "label": "car",
+      "class_id": 2,
+      "confidence": 0.6174,
+      "bbox": {
+        "x1": 106.17,
+        "y1": 119.3,
+        "x2": 391.61,
+        "y2": 310.23
+      }
+    }
+  ],
+  "input_filename": "best-cars-under-5-lakhs.webp",
+  "annotated_image_file": "20260509T111602Z_db650a49_boxed.jpg"
+}

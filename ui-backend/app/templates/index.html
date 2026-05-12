@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Object Detection UI Backend</title>
+    <style>
+      :root {
+        --bg: #f2efe7;
+        --card: #fffdf8;
+        --text: #1e1a14;
+        --muted: #6f6658;
+        --accent: #d17a22;
+        --accent-2: #2f6f7e;
+        --border: #e3dccf;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+        color: var(--text);
+        background:
+          radial-gradient(circle at 10% 0%, #f7d6a7 0%, transparent 35%),
+          radial-gradient(circle at 90% 100%, #b8d6dc 0%, transparent 30%),
+          var(--bg);
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        padding: 24px;
+      }
+
+      .container {
+        width: min(960px, 100%);
+      }
+
+      .card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 20px;
+        box-shadow: 0 10px 30px rgba(48, 40, 25, 0.08);
+        animation: rise 300ms ease-out;
+      }
+
+      h1 {
+        margin-top: 0;
+      }
+
+      p {
+        color: var(--muted);
+      }
+
+      form {
+        display: grid;
+        gap: 12px;
+      }
+
+      input[type="file"] {
+        border: 1px dashed var(--accent-2);
+        border-radius: 10px;
+        padding: 12px;
+        background: #f9f6ef;
+      }
+
+      button {
+        width: fit-content;
+        border: 0;
+        border-radius: 10px;
+        background: var(--accent);
+        color: white;
+        padding: 10px 16px;
+        font-weight: 700;
+        cursor: pointer;
+      }
+
+      .error {
+        color: #9f1c1c;
+        background: #ffe8e8;
+        border: 1px solid #f3c9c9;
+        border-radius: 10px;
+        padding: 10px;
+      }
+
+      .results {
+        margin-top: 18px;
+        display: grid;
+        gap: 14px;
+      }
+
+      .detections {
+        display: grid;
+        gap: 6px;
+      }
+
+      .det-item {
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 8px;
+        background: #fffcf5;
+      }
+
+      .image-wrap img {
+        width: 100%;
+        border-radius: 12px;
+        border: 1px solid var(--border);
+      }
+
+      @keyframes rise {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="container">
+      <section class="card">
+        <h1>Object Detection Demo</h1>
+        <p>Upload an image. The UI backend forwards it to the AI backend and stores boxed output + JSON in /outputs.</p>
+
+        <form action="/detect-ui" method="post" enctype="multipart/form-data">
+          <input type="file" name="file" accept="image/*" required />
+          <button type="submit">Run Detection</button>
+        </form>
+
+        {% if error %}
+        <div class="error">{{ error }}</div>
+        {% endif %}
+
+        {% if result %}
+        <div class="results">
+          <div><strong>Input:</strong> {{ result.input_filename }}</div>
+          <div><strong>Model:</strong> {{ result.model }} ({{ result.device }})</div>
+          <div><strong>Detections:</strong> {{ result.detections_count }}</div>
+          <div>
+            <strong>Saved:</strong>
+            image={{ result.saved_outputs.annotated_image }},
+            json={{ result.saved_outputs.json_file }}
+          </div>
+
+          <div class="detections">
+            {% for item in result.detections %}
+            <div class="det-item">
+              {{ loop.index }}. {{ item.label }} | conf={{ item.confidence }} |
+              bbox=({{ item.bbox.x1 }}, {{ item.bbox.y1 }}, {{ item.bbox.x2 }}, {{ item.bbox.y2 }})
+            </div>
+            {% endfor %}
+          </div>
+
+          <div class="image-wrap">
+            <img src="data:image/jpeg;base64,{{ result.annotated_image_base64 }}" alt="Annotated output" />
+          </div>
+        </div>
+        {% endif %}
+      </section>
+    </main>
+  </body>
+</html>

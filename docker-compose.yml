@@ -1,0 +1,29 @@
+services:
+  ai-backend:
+    build:
+      context: ./ai-backend
+    container_name: ai-backend
+    environment:
+      - MODEL_NAME=yolov3u.pt
+      - DEVICE=cpu
+      - CONFIDENCE_THRESHOLD=0.25
+      - YOLO_CONFIG_DIR=/tmp/Ultralytics
+    ports:
+      - "8001:8001"
+    volumes:
+      - ./outputs:/outputs
+
+  ui-backend:
+    build:
+      context: ./ui-backend
+    container_name: ui-backend
+    environment:
+      - AI_BACKEND_URL=http://ai-backend:8001/detect
+      - OUTPUTS_DIR=/outputs
+    depends_on:
+      - ai-backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./outputs:/outputs
+      - ./sample-inputs:/sample-inputs
